@@ -1,1 +1,867 @@
-.  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona LLC × Uganda Christian University</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --cream: #ede8dc;
+    --gold: #c9a84c;
+    --gold-dim: #8a6e2f;
+    --red: #c0392b;
+    --orange: #e67e22;
+    --yellow: #f1c40f;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --indigo: #8e44ad;
+    --violet: #6c3483;
+    --muted: #4a4a5a;
+    --rule: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: 0.6;
+    text-transform: uppercase;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding-top: 80px;
+    position: relative;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5rem 3rem 3rem;
+    max-width: 900px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.65);
+    max-width: 580px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover { background: #dbb855; transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* coordinate line */
+  .hero-coords {
+    padding: 1.5rem 3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(245,240,232,0.3);
+    letter-spacing: 0.15em;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 3rem;
+    background: var(--gold-dim);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  /* ── MAP SECTION ── */
+  #atlas {
+    padding-top: 4rem;
+    background: #080810;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .atlas-header {
+    padding: 3rem 3rem 2rem;
+  }
+
+  .atlas-header p {
+    color: rgba(245,240,232,0.6);
+    max-width: 600px;
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .map-frame-wrap {
+    position: relative;
+    width: 100%;
+    background: #060609;
+  }
+
+  .map-frame-wrap::before {
+    content: 'LIVE DEMO — DEPRESSION PREVALENCE ATLAS';
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    z-index: 10;
+    background: rgba(6,6,9,0.8);
+    padding: 0.3rem 1rem;
+    border: 1px solid var(--rule);
+  }
+
+  .map-frame-wrap iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+    display: block;
+    filter: saturate(1.1) contrast(1.05);
+  }
+
+  /* ROYGBIV legend */
+  .roygbiv-legend {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--rule);
+    background: #080810;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .legend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .gradient-bar {
+    flex: 1;
+    height: 8px;
+    background: linear-gradient(to right,
+      #c0392b, #e67e22, #f1c40f, #27ae60, #2980b9, #8e44ad, #6c3483);
+    border-radius: 2px;
+    min-width: 200px;
+  }
+
+  .legend-ends {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.4);
+    margin-top: 0.4rem;
+    min-width: 200px;
+    flex: 1;
+  }
+
+  .legend-right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* ── PENTAD ── */
+  #pentad { border-bottom: 1px solid var(--rule); }
+
+  .pentad-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    border: 1px solid var(--rule);
+  }
+
+  .pentad-card {
+    padding: 2.5rem 1.8rem;
+    border-right: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .pentad-card:last-child { border-right: none; }
+  .pentad-card:hover { background: rgba(201,168,76,0.05); }
+
+  .pentad-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .pentad-symbol {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .pentad-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .pentad-card p {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.6;
+  }
+
+  /* color accent strip */
+  .pentad-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .pentad-card:nth-child(1)::after { background: var(--red); }
+  .pentad-card:nth-child(2)::after { background: var(--yellow); }
+  .pentad-card:nth-child(3)::after { background: var(--green); }
+  .pentad-card:nth-child(4)::after { background: var(--blue); }
+  .pentad-card:nth-child(5)::after { background: var(--violet); }
+
+  /* loop arrow */
+  .loop-eq {
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--rule);
+    background: rgba(201,168,76,0.04);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .loop-eq span { color: rgba(245,240,232,0.4); font-size: 0.75rem; }
+
+  /* ── PILOT ── */
+  #pilot {
+    background: linear-gradient(180deg, #0a0a0f 0%, #08080f 100%);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pilot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .pilot-text p {
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .pilot-text strong { color: var(--paper); font-weight: 500; }
+
+  .stat-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 2rem;
+  }
+
+  .stat {
+    padding: 1.5rem;
+    background: var(--ink);
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-desc {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 100px;
+    align-items: stretch;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tl-row:last-child { border-bottom: none; }
+
+  .tl-phase {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding: 1rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+  }
+
+  .tl-task {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.7);
+    padding: 1rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+  }
+
+  .tl-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(245,240,232,0.35);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── TEAM ── */
+  #team { border-bottom: 1px solid var(--rule); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+
+  .team-card {
+    background: var(--ink);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+  }
+
+  .team-card:hover { background: rgba(201,168,76,0.04); }
+
+  .team-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .team-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .team-affil {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(245,240,232,0.35);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .team-desc {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.65;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    text-align: center;
+    padding: 8rem 3rem;
+    background: #060609;
+  }
+
+  #contact .section-label { justify-content: center; }
+  #contact .section-label::after { display: none; }
+
+  #contact p {
+    color: rgba(245,240,232,0.55);
+    max-width: 520px;
+    margin: 0.75rem auto 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .pentad-grid { grid-template-columns: 1fr 1fr; }
+    .pentad-card:nth-child(5) { border-right: none; }
+    .pilot-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .team-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero-content { padding: 4rem 1.5rem 2rem; }
+    .hero-coords { padding: 1.5rem; gap: 1.5rem; }
+    .atlas-header { padding: 2rem 1.5rem 1.5rem; }
+    .roygbiv-legend { padding: 1.5rem; }
+    .tl-row { grid-template-columns: 80px 1fr; }
+    .tl-time { display: none; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Ukubona LLC</div>
+  <ul class="nav-links">
+    <li><a href="#atlas">Atlas</a></li>
+    <li><a href="#pentad">Framework</a></li>
+    <li><a href="#pilot">Pilot</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Collaborate</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Ukubona LLC × Uganda Christian University</div>
+    <h1>Mapping<br><em>Loss</em> Across<br>Uganda</h1>
+    <p class="hero-sub">A digital atlas that treats disease burden not as a static snapshot, but as an optimization surface — identifying where intervention will have the most impact.</p>
+    <div class="hero-cta">
+      <a href="#atlas" class="btn-primary">View the Atlas</a>
+      <a href="#contact" class="btn-secondary">Collaborate on Grants</a>
+    </div>
+  </div>
+  <div class="hero-coords">
+    <span>0°19′N 32°35′E — Kampala, Uganda</span>
+    <span>Lead PI: Dr. Abimereki Muzaale, Johns Hopkins</span>
+    <span>Co-PI: Prof. Robert Basaza, UCU</span>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ATLAS / MAP -->
+<section id="atlas" style="padding:0;">
+  <div class="atlas-header">
+    <div class="section-label">Proof of Concept</div>
+    <h2 class="section-title">The Disease Burden Atlas</h2>
+    <p>The platform already exists. Below is a live demonstration — district-level prevalence visualized through a ROYGBIV loss gradient. Red = highest burden. Violet = lowest. This same infrastructure will be extended to CKD, ESRD, Diabetes, and beyond for the UCU collaboration.</p>
+  </div>
+
+  <div class="map-frame-wrap">
+    <iframe
+      src="https://ukubona-llc.github.io/assets/html/cartography-256.html"
+      title="Ukubona Disease Burden Atlas"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="roygbiv-legend">
+    <span class="legend-label">Loss Scale</span>
+    <div class="legend-right">
+      <div class="gradient-bar"></div>
+      <div class="legend-ends">
+        <span>● Highest burden / data desert</span>
+        <span>● Clinical ideal / robust data ●</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PENTAD FRAMEWORK -->
+<section id="pentad">
+  <div class="section-label">The Framework</div>
+  <h2 class="section-title">Pentad of Optimization</h2>
+  <p style="color:rgba(245,240,232,0.55); max-width:620px; font-size:0.95rem;">
+    Public health treated as a dynamic learning system. The map is not decoration — it is a visualization of the loss function. Each iteration brings the landscape closer to the clinical ideal.
+  </p>
+
+  <div class="pentad-grid">
+    <div class="pentad-card">
+      <div class="pentad-num">01</div>
+      <span class="pentad-symbol">θ<sub>t</sub></span>
+      <h3>State Selection</h3>
+      <p>The dropdown menu. The user selects the disease burden to analyze — CKD, Depression, Diabetes. This defines the parameter space for the current iteration.</p>
+    </div>
+    <div class="pentad-card">
+      <div class="pentad-num">02</div>
+      <span class="pentad-symbol">L(θ)</span>
+      <h3>Loss Function</h3>
+      <p>Reality minus Ideal. Quantifies the public health debt for the selected condition — both in documented prevalence and in data deserts where literature is absent.</p>
+    </div>
+    <div class="pentad-card">
+      <div class="pentad-num">03</div>
+      <span class="pentad-symbol">∇L</span>
+      <h3>Gradient Discovery</h3>
+      <p>The ROYGBIV heat map. Identifies the direction and magnitude of steepest need — which districts require intervention most urgently, where the data gaps are sharpest.</p>
+    </div>
+    <div class="pentad-card">
+      <div class="pentad-num">04</div>
+      <span class="pentad-symbol">−η∇L</span>
+      <h3>The Update Rule</h3>
+      <p>The grant-funded intervention. Research resources, student-led data collection, and policy shifts applied in the direction of the negative gradient to reduce loss.</p>
+    </div>
+    <div class="pentad-card">
+      <div class="pentad-num">05</div>
+      <span class="pentad-symbol">θ<sub>t+1</sub></span>
+      <h3>New State</h3>
+      <p>The updated landscape. Reduced data deserts, measurably improved health reality — and the baseline for the next grant cycle. The loop is self-sustaining.</p>
+    </div>
+  </div>
+
+  <div class="loop-eq">
+    θ<sub>t</sub> &nbsp;→&nbsp; L(θ) &nbsp;→&nbsp; ∇L &nbsp;→&nbsp; −η∇L &nbsp;→&nbsp; θ<sub>t+1</sub>
+    <span>&nbsp;&nbsp;// each grant cycle is one iteration</span>
+  </div>
+</section>
+
+<!-- PILOT CASE -->
+<section id="pilot">
+  <div class="section-label">First Case Study</div>
+  <h2 class="section-title">Chronic Kidney Disease &amp; ESRD in Uganda</h2>
+
+  <div class="pilot-grid">
+    <div class="pilot-text">
+      <p>While the atlas is designed for multi-condition mapping, the collaboration with UCU opens on <strong>Chronic Kidney Disease and End-Stage Renal Disease</strong> — the sharpest intersection of Dr. Muzaale's NIH-funded expertise and Uganda's most undercharted health terrain.</p>
+      <p>Renal replacement therapy infrastructure is sparse and geographically uneven. The data landscape is even thinner. That combination makes CKD/ESRD the ideal first optimization target: high clinical stakes, high gradient, high grant viability.</p>
+      <p>The methodology is direct: systematic literature review of PubMed and AJOL, district-level extraction, prevalence standardization, geospatial mapping — then submission. The platform already exists. The loop just needs data to run.</p>
+
+      <div class="stat-block">
+        <div class="stat">
+          <span class="stat-num">135</span>
+          <span class="stat-desc">Uganda Districts</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">&lt;12</span>
+          <span class="stat-desc">With CKD Prevalence Data</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">4</span>
+          <span class="stat-desc">Dialysis Centers Nationally</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">Wk 1</span>
+          <span class="stat-desc">Framework Delivery → UCU</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label" style="margin-bottom:1rem;">Proposed Timeline</div>
+      <div class="timeline">
+        <div class="tl-row">
+          <div class="tl-phase">Now</div>
+          <div class="tl-task">Concept + Pentad delivery to UCU team</div>
+          <div class="tl-time">Wk 1–2</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase I</div>
+          <div class="tl-task">CKD/ESRD literature search strings + PubMed/AJOL review</div>
+          <div class="tl-time">Wk 2–4</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase II</div>
+          <div class="tl-task">UCU student data extraction + district-level standardization</div>
+          <div class="tl-time">Wk 5–10</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Phase III</div>
+          <div class="tl-task">Atlas integration — CKD layer live on dashboard</div>
+          <div class="tl-time">Wk 10–12</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-phase">Grant</div>
+          <div class="tl-task">NIH / Wellcome preliminary data submission</div>
+          <div class="tl-time">Month 4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-label">The Collaboration</div>
+  <h2 class="section-title">Principal Investigators</h2>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-role">Lead PI</div>
+      <div class="team-name">Dr. Abimereki Muzaale</div>
+      <div class="team-affil">Johns Hopkins University · Ukubona LLC</div>
+      <p class="team-desc">NIH K08-AG065520. Transplant epidemiology, living donor outcomes, renal research. Brings the methodological framework and the Hopkins pedigree to the Uganda context. Leads technical architecture and grant strategy.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Co-Principal Investigator</div>
+      <div class="team-name">Prof. Robert Basaza</div>
+      <div class="team-affil">Uganda Christian University</div>
+      <p class="team-desc">Leads the Uganda-based team, institutional coordination at UCU, and local data access networks. Anchors the collaboration in the policy and public health realities of the Ugandan health system.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-role">Systems & Strategy</div>
+      <div class="team-name">Paul Luswata</div>
+      <div class="team-affil">Ukubona LLC</div>
+      <p class="team-desc">Strategy and Systems Consultant. Oversees technical architecture of the data platform — ensuring the multi-condition dropdown, atlas infrastructure, and data pipelines scale cleanly from pilot to full deployment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Next Step</div>
+  <h2 class="section-title" style="font-size:2.5rem;">Ready to Map<br><em style="color:var(--gold);">the Gradient?</em></h2>
+  <p>The infrastructure exists. The framework is defined. The first data layer is CKD. Join the collaboration — as a student researcher, institutional partner, or grant co-investigator.</p>
+  <div class="contact-links">
+    <a href="https://ukubona-llc.github.io" class="btn-primary" target="_blank">Ukubona Platform</a>
+    <a href="https://ukubona-llc.github.io/assets/html/cartography-256.html" class="btn-secondary" target="_blank">View Full Atlas</a>
+  </div>
+</section>
+      
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Ukubona LLC</div>
+  <div class="footer-copy">© 2026 · Kampala, Uganda · Digital Landscape Mapping · ukubona-llc.github.io</div>
+</footer>
+
+</body>
+</html>       
